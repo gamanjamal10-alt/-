@@ -5,12 +5,14 @@ import { getSubscription, processMockPayment } from '../../services/api';
 import { ANNUAL_SUBSCRIPTION_FEE } from '../../constants';
 import Spinner from '../../components/ui/Spinner';
 import Button from '../../components/ui/Button';
+import PaymentModal from '../../components/PaymentModal';
 
 const SubscriptionPage: React.FC = () => {
     const { user } = useAuth();
     const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [loading, setLoading] = useState(true);
-    const [isPaying, setIsPaying] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedMethod, setSelectedMethod] = useState<'BaridiMob' | 'CCP'>('BaridiMob');
 
     const fetchSubscription = useCallback(async () => {
         if (!user?.storeId) return;
@@ -29,18 +31,22 @@ const SubscriptionPage: React.FC = () => {
         fetchSubscription();
     }, [fetchSubscription]);
     
-    const handlePayment = async (method: 'BaridiMob' | 'CCP') => {
-        if (!user?.storeId) return;
-        setIsPaying(true);
+    const handlePaymentClick = (method: 'BaridiMob' | 'CCP') => {
+        setSelectedMethod(method);
+        setIsModalOpen(true);
+    };
+
+    const handleProcessPayment = async () => {
+        if (!user?.storeId) throw new Error("User store not found");
         try {
-            await processMockPayment(user.storeId, method);
-            alert(`تم الدفع بنجاح عبر ${method}! تم تفعيل اشتراكك.`);
+            await processMockPayment(user.storeId, selectedMethod);
+            alert(`تم الدفع بنجاح عبر ${selectedMethod}! تم تفعيل اشتراكك.`);
+            setIsModalOpen(false);
             await fetchSubscription(); // Refresh subscription status
         } catch (error) {
-            alert('حدث خطأ أثناء عملية الدفع.');
             console.error("Payment failed:", error);
-        } finally {
-            setIsPaying(false);
+            // Re-throw to be caught by modal
+            throw error;
         }
     };
 
@@ -114,19 +120,23 @@ const SubscriptionPage: React.FC = () => {
                         </p>
                         <p className="font-bold mb-4 text-gray-700">اختر طريقة الدفع:</p>
                         <div className="flex flex-col md:flex-row gap-4">
-                            <Button className="w-full md:w-auto" onClick={() => handlePayment('BaridiMob')} isLoading={isPaying} disabled={isPaying}>
+                            <Button className="w-full md:w-auto" onClick={() => handlePaymentClick('BaridiMob')}>
                                 الدفع عبر بريدي موب
                             </Button>
-                            <Button className="w-full md:w-auto" variant="secondary" onClick={() => handlePayment('CCP')} isLoading={isPaying} disabled={isPaying}>
+                            <Button className="w-full md:w-auto" variant="secondary" onClick={() => handlePaymentClick('CCP')}>
                                 الدفع عبر CCP
                             </Button>
                         </div>
-                        <p className="mt-4 text-sm text-gray-500">
-                            هذه عملية دفع تجريبية (Mock). سيتم تفعيل حسابك مباشرة بعد الضغط على الزر.
-                        </p>
                     </div>
                 )}
             </div>
+            
+            <PaymentModal 
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              method={selectedMethod}
+              onSubmit={handleProcessPayment}
+            />
         </div>
     );
 };
