@@ -53,9 +53,9 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <section className="text-center py-12 bg-stone-100 rounded-lg">
+      <section className="text-center py-12 bg-amber-100 rounded-lg">
         <h1 className="text-4xl font-extrabold text-green-900">أهلاً بك في سوق الفلاح</h1>
-        <p className="mt-4 text-lg text-gray-700">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
+        <p className="mt-4 text-lg text-green-800">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
       </section>
 
       <section className="mt-12">
@@ -63,12 +63,12 @@ const HomePage: React.FC = () => {
           <input
             type="text"
             placeholder="ابحث عن منتج..."
-            className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+            className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-800 focus:border-green-800"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select 
-            className="p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:ring-green-500 focus:border-green-500"
+            className="p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:ring-green-800 focus:border-green-800"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as StoreType | 'all')}
             >

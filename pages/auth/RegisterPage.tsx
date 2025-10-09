@@ -42,13 +42,13 @@ const RegisterPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-stone-100 flex items-center justify-center py-12">
+        <div className="min-h-screen bg-amber-50 flex items-center justify-center py-12">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-green-800">
                         <Link to="/">سوق الفلاح</Link>
                     </h1>
-                    <p className="text-gray-600 mt-2">إنشاء متجر جديد</p>
+                    <p className="text-green-800 mt-2">إنشاء متجر جديد</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
@@ -96,9 +96,9 @@ const RegisterPage: React.FC = () => {
                         إنشاء حساب
                     </Button>
                 </form>
-                <p className="mt-6 text-center text-sm text-gray-600">
+                <p className="mt-6 text-center text-sm text-green-800">
                     لديك حساب بالفعل؟{' '}
-                    <Link to="/login" className="font-medium text-green-700 hover:text-green-600">
+                    <Link to="/login" className="font-medium text-green-800 hover:text-green-700">
                         تسجيل الدخول
                     </Link>
                 </p>

@@ -27,13 +27,13 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-stone-100 flex items-center justify-center">
+        <div className="min-h-screen bg-amber-50 flex items-center justify-center">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-green-800">
                         <Link to="/">سوق الفلاح</Link>
                     </h1>
-                    <p className="text-gray-600 mt-2">تسجيل الدخول إلى لوحة التحكم</p>
+                    <p className="text-green-800 mt-2">تسجيل الدخول إلى لوحة التحكم</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <Input
@@ -57,9 +57,9 @@ const LoginPage: React.FC = () => {
                         تسجيل الدخول
                     </Button>
                 </form>
-                <p className="mt-6 text-center text-sm text-gray-600">
+                <p className="mt-6 text-center text-sm text-green-800">
                     ليس لديك حساب؟{' '}
-                    <Link to="/register" className="font-medium text-green-700 hover:text-green-600">
+                    <Link to="/register" className="font-medium text-green-800 hover:text-green-700">
                         أنشئ متجرك الآن
                     </Link>
                 </p>

@@ -19,12 +19,12 @@ const StorefrontHeader: React.FC = () => {
         <div className="flex items-center space-x-4 space-x-reverse">
           {user ? (
             <>
-              <button onClick={handleDashboardClick} className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-stone-100">لوحة التحكم</button>
-              <button onClick={logout} className="px-4 py-2 text-gray-600 font-semibold rounded-md hover:bg-stone-100">تسجيل الخروج</button>
+              <button onClick={handleDashboardClick} className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-amber-100">لوحة التحكم</button>
+              <button onClick={logout} className="px-4 py-2 text-gray-600 font-semibold rounded-md hover:bg-amber-100">تسجيل الخروج</button>
             </>
           ) : (
             <>
-              <Link to="/login" className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-stone-100">تسجيل الدخول</Link>
+              <Link to="/login" className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-amber-100">تسجيل الدخول</Link>
               <Link to="/register" className="px-4 py-2 bg-green-800 text-white font-bold rounded-md hover:bg-green-900">
                 ابدأ متجرك
               </Link>
@@ -38,8 +38,8 @@ const StorefrontHeader: React.FC = () => {
 
 const StorefrontFooter: React.FC = () => {
   return (
-    <footer className="bg-stone-100 mt-12">
-      <div className="container mx-auto px-6 py-8 text-center text-gray-600">
+    <footer className="bg-amber-100 mt-12">
+      <div className="container mx-auto px-6 py-8 text-center text-green-800">
         <p>&copy; {new Date().getFullYear()} سوق الفلاح. كل الحقوق محفوظة.</p>
         <p className="mt-2">منصة لربط الفلاحين والتجار الجزائريين.</p>
       </div>
@@ -49,7 +49,7 @@ const StorefrontFooter: React.FC = () => {
 
 const StorefrontLayout: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-stone-50">
+    <div className="flex flex-col min-h-screen bg-amber-50">
       <StorefrontHeader />
       <main className="flex-grow container mx-auto px-6 py-8">
         <Outlet />

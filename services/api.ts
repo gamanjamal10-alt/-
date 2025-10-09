@@ -33,7 +33,7 @@ let mockStores: Store[] = [
     name: 'متجر تحت المراجعة', 
     description: 'هذا المتجر قيد المراجعة ولن يظهر للعامة.',
     phone: '0777000000',
-    logo: 'https://picsum.photos/seed/review/200',
+    logo: 'https://picsum.photos/seed/barn/200',
     type: StoreType.RETAILER,
     ownerId: 'user-3',
     status: StoreStatus.PENDING_VERIFICATION,
@@ -113,7 +113,7 @@ export const register = (data: { storeName: string; email: string; phone: string
         name: data.storeName,
         description: 'متجر جديد في سوق الفلاح.',
         phone: data.phone,
-        logo: 'https://picsum.photos/seed/newfarm/200',
+        logo: 'https://picsum.photos/seed/agriculture/200',
         type: StoreType.FARMER, 
         ownerId: newUserId,
         // NEW LOGIC: Store is immediately in trial and public
@@ -174,7 +174,7 @@ export const getProductsForStore = (storeId: string): Promise<Product[]> => getP
 export const addProduct = (productData: Omit<Product, 'id'>): Promise<Product> => {
     const newProduct: Product = {
         id: `prod-${Date.now()}`,
-        images: ['https://picsum.photos/seed/freshproduce/400/300'],
+        images: ['https://picsum.photos/seed/produce/400/300'],
         ...productData
     };
     mockProducts.push(newProduct);
