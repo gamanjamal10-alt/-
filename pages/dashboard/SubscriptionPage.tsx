@@ -92,7 +92,8 @@ const SubscriptionPage: React.FC = () => {
         );
     };
 
-    const needsPayment = !subscription || subscription.status === 'expired';
+    const isTrial = subscription?.status === 'trial';
+    const needsRenewal = !subscription || subscription.status === 'expired';
 
     return (
         <div>
@@ -100,9 +101,11 @@ const SubscriptionPage: React.FC = () => {
             <div className="space-y-8">
                 {renderSubscriptionStatus()}
 
-                {(needsPayment || subscription?.status === 'trial') && (
+                {(isTrial || needsRenewal) && (
                      <div className="p-8 bg-white rounded-lg shadow-md">
-                        <h2 className="text-2xl font-bold text-gray-800">تجديد الاشتراك السنوي</h2>
+                        <h2 className="text-2xl font-bold text-gray-800">
+                            {isTrial ? 'تفعيل الاشتراك السنوي' : 'تجديد الاشتراك السنوي'}
+                        </h2>
                         <p className="mt-2 text-gray-600">
                             احصل على وصول كامل لمنصة سوق الفلاح لمدة سنة كاملة.
                         </p>
