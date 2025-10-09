@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Store, Product } from '../../types';
 import { getStoreById, getProductsByStoreId } from '../../services/api';
 import Spinner from '../../components/ui/Spinner';
 import ProductCard from '../../components/ProductCard';
+import { useAuth } from '../../hooks/useAuth';
 
 const StorePage: React.FC = () => {
   const { storeId } = useParams<{ storeId: string }>();
   const [store, setStore] = useState<Store | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +32,8 @@ const StorePage: React.FC = () => {
     };
     fetchData();
   }, [storeId]);
+  
+  const isOwner = user && store && user.id === store.ownerId;
 
   if (loading) return <Spinner />;
   if (!store) return <div className="text-center py-12 text-2xl font-bold">لم يتم العثور على المتجر.</div>;
@@ -42,9 +46,16 @@ const StorePage: React.FC = () => {
           <h1 className="text-4xl font-extrabold text-green-800">{store.name}</h1>
           <p className="mt-2 text-lg text-gray-600 font-bold">{store.type}</p>
           <p className="mt-4 text-gray-700">{store.description}</p>
-          <a href={`tel:${store.phone}`} className="mt-6 inline-block bg-green-800 text-white font-bold py-3 px-8 rounded-md hover:bg-green-900 transition-colors">
-            اتصل بالبائع
-          </a>
+          <div className="mt-6 flex items-center flex-wrap gap-4">
+            <a href={`tel:${store.phone}`} className="inline-block bg-green-800 text-white font-bold py-3 px-8 rounded-md hover:bg-green-900 transition-colors">
+              اتصل بالبائع
+            </a>
+            {isOwner && (
+              <Link to="/dashboard" className="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-md hover:bg-blue-700 transition-colors">
+                إدارة متجرك
+              </Link>
+            )}
+          </div>
         </div>
       </header>
       
