@@ -49,13 +49,15 @@ const SubscriptionPage: React.FC = () => {
         if (!subscription) return <p>لا توجد معلومات عن اشتراكك.</p>;
 
         const { status, trialEnds, expires } = subscription;
-        let message, title, bgColor;
+        let message, title, bgColor, borderColor, textColor;
 
         switch (status) {
             case 'active':
                 title = "اشتراكك نشط";
                 message = `شكراً لك! متجرك فعال وسيظل كذلك حتى تاريخ ${expires?.toLocaleDateString('ar-DZ')}.`;
-                bgColor = 'bg-green-100 border-green-500 text-green-800';
+                bgColor = 'bg-green-100';
+                borderColor = 'border-green-500';
+                textColor = 'text-green-800';
                 break;
             case 'trial':
                 title = "أنت في الفترة التجريبية";
@@ -64,20 +66,26 @@ const SubscriptionPage: React.FC = () => {
                 
                 if (daysLeft <= 5) {
                     message += " سارع بتجديد اشتراكك لتجنب إيقاف المتجر.";
-                    bgColor = 'bg-yellow-100 border-yellow-500 text-yellow-800';
+                    bgColor = 'bg-yellow-100';
+                    borderColor = 'border-yellow-500';
+                    textColor = 'text-yellow-800';
                 } else {
-                    bgColor = 'bg-green-100 border-green-500 text-green-800';
+                    bgColor = 'bg-green-100';
+                    borderColor = 'border-green-500';
+                    textColor = 'text-green-800';
                 }
                 break;
             case 'expired':
                 title = "انتهت صلاحية اشتراكك";
                 message = "تم إيقاف متجرك مؤقتاً. يرجى تجديد اشتراكك لإعادة تفعيله وعرض منتجاتك للزبائن.";
-                bgColor = 'bg-red-100 border-red-500 text-red-800';
+                bgColor = 'bg-red-100';
+                borderColor = 'border-red-500';
+                textColor = 'text-red-800';
                 break;
         }
 
         return (
-            <div className={`p-6 border-r-4 ${bgColor} rounded-md shadow`}>
+            <div className={`p-6 border-r-4 ${bgColor} ${borderColor} ${textColor} rounded-md shadow`}>
                 <h2 className="text-xl font-bold">{title}</h2>
                 <p className="mt-2">{message}</p>
             </div>
@@ -94,14 +102,14 @@ const SubscriptionPage: React.FC = () => {
 
                 {(needsPayment || subscription?.status === 'trial') && (
                      <div className="p-8 bg-white rounded-lg shadow-md">
-                        <h2 className="text-2xl font-bold">تجديد الاشتراك السنوي</h2>
+                        <h2 className="text-2xl font-bold text-gray-800">تجديد الاشتراك السنوي</h2>
                         <p className="mt-2 text-gray-600">
                             احصل على وصول كامل لمنصة سوق الفلاح لمدة سنة كاملة.
                         </p>
-                        <p className="my-4 text-4xl font-extrabold text-green-900">
+                        <p className="my-4 text-4xl font-extrabold text-green-800">
                             {ANNUAL_SUBSCRIPTION_FEE.toLocaleString()} دج / سنة
                         </p>
-                        <p className="font-bold mb-4">اختر طريقة الدفع:</p>
+                        <p className="font-bold mb-4 text-gray-700">اختر طريقة الدفع:</p>
                         <div className="flex flex-col md:flex-row gap-4">
                             <Button className="w-full md:w-auto" onClick={() => handlePayment('BaridiMob')} isLoading={isPaying} disabled={isPaying}>
                                 الدفع عبر بريدي موب

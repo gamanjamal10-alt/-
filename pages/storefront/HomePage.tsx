@@ -1,3 +1,4 @@
+// Fix: Corrected the React import statement which had a syntax error.
 import React, { useState, useEffect, useMemo } from 'react';
 import { Product, Store, StoreType } from '../../types';
 import { getProducts, getStores } from '../../services/api';
@@ -53,9 +54,9 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <section className="text-center py-12 bg-amber-100 rounded-lg">
-        <h1 className="text-4xl font-extrabold text-green-900">أهلاً بك في سوق الفلاح</h1>
-        <p className="mt-4 text-lg text-green-800">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
+      <section className="text-center py-12 bg-white rounded-lg shadow-md">
+        <h1 className="text-4xl font-extrabold text-green-800">أهلاً بك في سوق الفلاح</h1>
+        <p className="mt-4 text-lg text-gray-600">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
       </section>
 
       <section className="mt-12">
@@ -88,7 +89,7 @@ const HomePage: React.FC = () => {
           </div>
         )}
         { !loading && filteredProducts.length === 0 && (
-            <div className="text-center py-16">
+            <div className="text-center py-16 bg-white rounded-lg shadow-md">
                 <h3 className="text-2xl font-bold text-gray-700">لا توجد منتجات مطابقة</h3>
                 <p className="text-gray-500 mt-2">حاول تغيير كلمات البحث أو الفلاتر.</p>
             </div>

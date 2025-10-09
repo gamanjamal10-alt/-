@@ -38,17 +38,16 @@ const ProductDetailsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           <img src={product.images[0]} alt={product.name} className="w-full h-auto object-cover rounded-lg shadow-md" />
-          {/* Add a gallery for multiple images if available */}
         </div>
         <div>
-          <h1 className="text-4xl font-extrabold text-green-900">{product.name}</h1>
-          <p className="mt-4 text-4xl font-bold text-green-800">{product.price.toLocaleString()} دج</p>
-          <p className="mt-6 text-green-800 leading-relaxed">{product.description}</p>
-          <div className="mt-8 p-4 bg-amber-100 rounded-md border border-amber-200">
-            <h2 className="font-bold text-lg text-green-900">معلومات البائع</h2>
+          <h1 className="text-4xl font-extrabold text-green-800">{product.name}</h1>
+          <p className="mt-4 text-4xl font-bold text-gray-800">{product.price.toLocaleString()} دج</p>
+          <p className="mt-6 text-gray-700 leading-relaxed">{product.description}</p>
+          <div className="mt-8 p-4 bg-gray-100 rounded-md border border-gray-200">
+            <h2 className="font-bold text-lg text-gray-800">معلومات البائع</h2>
             {store ? (
                 <>
-                    <p className="mt-2 text-green-800">
+                    <p className="mt-2 text-gray-700">
                         <span className="font-semibold">المتجر:</span>{' '}
                         <Link to={`/stores/${store.id}`} className="text-green-800 hover:underline font-bold">{store.name}</Link>
                     </p>

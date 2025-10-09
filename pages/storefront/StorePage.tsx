@@ -37,18 +37,18 @@ const StorePage: React.FC = () => {
   return (
     <div>
       <header className="bg-white p-8 rounded-lg shadow-lg mb-12 flex flex-col md:flex-row items-center gap-8">
-        <img src={store.logo} alt={`${store.name} logo`} className="w-32 h-32 rounded-full object-cover border-4 border-amber-200" />
+        <img src={store.logo} alt={`${store.name} logo`} className="w-32 h-32 rounded-full object-cover border-4 border-amber-100" />
         <div>
-          <h1 className="text-4xl font-extrabold text-green-900">{store.name}</h1>
-          <p className="mt-2 text-lg text-green-700 font-bold">{store.type}</p>
-          <p className="mt-4 text-green-800">{store.description}</p>
+          <h1 className="text-4xl font-extrabold text-green-800">{store.name}</h1>
+          <p className="mt-2 text-lg text-gray-600 font-bold">{store.type}</p>
+          <p className="mt-4 text-gray-700">{store.description}</p>
           <a href={`tel:${store.phone}`} className="mt-6 inline-block bg-green-800 text-white font-bold py-3 px-8 rounded-md hover:bg-green-900 transition-colors">
             اتصل بالبائع
           </a>
         </div>
       </header>
       
-      <h2 className="text-3xl font-bold mb-8 text-green-900">منتجات المتجر</h2>
+      <h2 className="text-3xl font-bold mb-8 text-green-800">منتجات المتجر</h2>
       {products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.map(product => (
@@ -56,8 +56,8 @@ const StorePage: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-amber-100 rounded-lg">
-          <p className="text-xl text-green-800">هذا المتجر لم يضف أي منتجات بعد.</p>
+        <div className="text-center py-16 bg-white rounded-lg shadow-md">
+          <p className="text-xl text-gray-700">هذا المتجر لم يضف أي منتجات بعد.</p>
         </div>
       )}
     </div>

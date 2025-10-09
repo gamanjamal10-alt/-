@@ -11,14 +11,14 @@ const DashboardSidebar: React.FC = () => {
     navigate('/');
   };
 
-  const linkClasses = "flex items-center px-4 py-3 text-green-100 hover:bg-green-800 rounded-md transition-colors";
-  const activeLinkClasses = "bg-green-800 font-bold";
+  const linkClasses = "flex items-center px-4 py-3 text-green-100 hover:bg-green-700 rounded-md transition-colors";
+  const activeLinkClasses = "bg-green-700 font-bold";
 
   return (
-    <div className="h-screen w-64 bg-green-900 text-white flex flex-col fixed top-0 right-0">
-      <div className="px-6 py-4 border-b border-green-800">
+    <div className="h-screen w-64 bg-green-800 text-white flex flex-col fixed top-0 right-0 shadow-lg">
+      <div className="px-6 py-4 border-b border-green-700">
         <h1 className="text-2xl font-bold">لوحة التحكم</h1>
-        <p className="text-sm text-green-200">{user?.email}</p>
+        <p className="text-sm text-green-200 truncate">{user?.email}</p>
       </div>
       <nav className="flex-grow p-4 space-y-2">
         <NavLink to="/dashboard/overview" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>نظرة عامة</NavLink>
@@ -27,7 +27,7 @@ const DashboardSidebar: React.FC = () => {
         <NavLink to="/dashboard/subscription" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>الاشتراك</NavLink>
         <NavLink to="/dashboard/invoices" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>الفواتير</NavLink>
       </nav>
-      <div className="p-4 border-t border-green-800">
+      <div className="p-4 border-t border-green-700">
         <NavLink to="/" className={linkClasses}>العودة للموقع</NavLink>
         <button onClick={handleLogout} className={`${linkClasses} w-full text-right`}>تسجيل الخروج</button>
       </div>
@@ -37,7 +37,7 @@ const DashboardSidebar: React.FC = () => {
 
 const DashboardLayout: React.FC = () => {
   return (
-    <div className="flex bg-stone-100">
+    <div className="flex bg-amber-50 min-h-screen">
       <DashboardSidebar />
       <main className="flex-1 p-8 mr-64">
         <Outlet />

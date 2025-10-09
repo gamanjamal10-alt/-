@@ -13,7 +13,7 @@ let mockStores: Store[] = [
     name: 'مزرعة الخيرات', 
     description: 'نوفر لكم أجود أنواع الخضروات والفواكه الطازجة مباشرة من الحقل.',
     phone: '0555123456',
-    logo: 'https://picsum.photos/seed/farm1/200',
+    logo: 'https://picsum.photos/seed/farm/200',
     type: StoreType.FARMER,
     ownerId: 'user-1',
     status: StoreStatus.ACTIVE
@@ -23,7 +23,7 @@ let mockStores: Store[] = [
     name: 'بستاني للفواكه', 
     description: 'متخصصون في بيع الفواكه الموسمية بالجملة.',
     phone: '0666789012',
-    logo: 'https://picsum.photos/seed/orchard/200',
+    logo: 'https://picsum.photos/seed/fruitmarket/200',
     type: StoreType.WHOLESALER,
     ownerId: 'user-2',
     status: StoreStatus.TRIAL,
@@ -33,7 +33,7 @@ let mockStores: Store[] = [
     name: 'متجر تحت المراجعة', 
     description: 'هذا المتجر قيد المراجعة ولن يظهر للعامة.',
     phone: '0777000000',
-    logo: 'https://picsum.photos/seed/barn/200',
+    logo: 'https://picsum.photos/seed/review/200',
     type: StoreType.RETAILER,
     ownerId: 'user-3',
     status: StoreStatus.PENDING_VERIFICATION,
@@ -42,15 +42,15 @@ let mockStores: Store[] = [
 
 let mockProducts: Product[] = [
     // Store 1 Products
-    { id: 'prod-1', storeId: 'store-1', name: 'طماطم', price: 120, quantity: 50, description: 'طماطم حمراء طازجة وناضجة، مثالية للسلطات والطبخ.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/tomato/400/300'] },
-    { id: 'prod-2', storeId: 'store-1', name: 'بطاطا', price: 80, quantity: 100, description: 'بطاطا عالية الجودة، مناسبة للقلي والسلق.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/potato/400/300'] },
-    { id: 'prod-3', storeId: 'store-1', name: 'خيار', price: 100, quantity: 8, description: 'خيار طازج ومقرمش.', status: ProductStatus.LOW_STOCK, images: ['https://picsum.photos/seed/cucumber/400/300'] },
-    { id: 'prod-4', storeId: 'store-1', name: 'فلفل حلو', price: 150, quantity: 0, description: 'فلفل حلو ملون.', status: ProductStatus.OUT_OF_STOCK, images: ['https://picsum.photos/seed/pepper/400/300'] },
+    { id: 'prod-1', storeId: 'store-1', name: 'طماطم', price: 120, quantity: 50, description: 'طماطم حمراء طازجة وناضجة، مثالية للسلطات والطبخ.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/tomatoes/400/300'] },
+    { id: 'prod-2', storeId: 'store-1', name: 'بطاطا', price: 80, quantity: 100, description: 'بطاطا عالية الجودة، مناسبة للقلي والسلق.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/potatoes/400/300'] },
+    { id: 'prod-3', storeId: 'store-1', name: 'خيار', price: 100, quantity: 8, description: 'خيار طازج ومقرمش.', status: ProductStatus.LOW_STOCK, images: ['https://picsum.photos/seed/cucumbers/400/300'] },
+    { id: 'prod-4', storeId: 'store-1', name: 'فلفل حلو', price: 150, quantity: 0, description: 'فلفل حلو ملون.', status: ProductStatus.OUT_OF_STOCK, images: ['https://picsum.photos/seed/peppers/400/300'] },
     // Store 2 Products
-    { id: 'prod-5', storeId: 'store-2', name: 'تفاح', price: 250, quantity: 200, description: 'صناديق تفاح أحمر مستورد.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/apple/400/300'] },
-    { id: 'prod-6', storeId: 'store-2', name: 'موز', price: 300, quantity: 150, description: 'موز طازج وحلو المذاق.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/banana/400/300'] },
+    { id: 'prod-5', storeId: 'store-2', name: 'تفاح', price: 250, quantity: 200, description: 'صناديق تفاح أحمر مستورد.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/apples/400/300'] },
+    { id: 'prod-6', storeId: 'store-2', name: 'موز', price: 300, quantity: 150, description: 'موز طازج وحلو المذاق.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/bananas/400/300'] },
     // Products for pending store (should not be visible)
-    { id: 'prod-7', storeId: 'store-3', name: 'منتج سري', price: 1000, quantity: 10, description: 'هذا المنتج من متجر قيد المراجعة.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/secret/400/300'] },
+    { id: 'prod-7', storeId: 'store-3', name: 'منتج سري', price: 1000, quantity: 10, description: 'هذا المنتج من متجر قيد المراجعة.', status: ProductStatus.IN_STOCK, images: ['https://picsum.photos/seed/secret-product/400/300'] },
 ];
 
 
@@ -113,7 +113,7 @@ export const register = (data: { storeName: string; email: string; phone: string
         name: data.storeName,
         description: 'متجر جديد في سوق الفلاح.',
         phone: data.phone,
-        logo: 'https://picsum.photos/seed/agriculture/200',
+        logo: 'https://picsum.photos/seed/newstore/200',
         type: StoreType.FARMER, 
         ownerId: newUserId,
         // NEW LOGIC: Store is immediately in trial and public
@@ -174,7 +174,7 @@ export const getProductsForStore = (storeId: string): Promise<Product[]> => getP
 export const addProduct = (productData: Omit<Product, 'id'>): Promise<Product> => {
     const newProduct: Product = {
         id: `prod-${Date.now()}`,
-        images: ['https://picsum.photos/seed/produce/400/300'],
+        images: ['https://picsum.photos/seed/newproduct/400/300'],
         ...productData
     };
     mockProducts.push(newProduct);
