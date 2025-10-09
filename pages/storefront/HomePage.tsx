@@ -4,6 +4,7 @@ import { Product, Store, StoreType } from '../../types';
 import { getProducts, getStores } from '../../services/api';
 import ProductCard from '../../components/ProductCard';
 import Spinner from '../../components/ui/Spinner';
+import StoreCard from '../../components/StoreCard';
 
 const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -59,7 +60,25 @@ const HomePage: React.FC = () => {
         <p className="mt-4 text-lg text-gray-600">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
       </section>
 
+      {/* Stores Section */}
       <section className="mt-12">
+        <h2 className="text-3xl font-bold mb-8 text-green-800 text-center">اكتشف المتاجر</h2>
+        {loading ? (
+            <Spinner />
+        ) : stores.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {stores.map(store => (
+                    <StoreCard key={store.id} store={store} />
+                ))}
+            </div>
+        ) : (
+            <p className="text-center py-8 text-gray-500 bg-white rounded-lg shadow-md">لا توجد متاجر متاحة حالياً.</p>
+        )}
+      </section>
+
+      {/* Products Section */}
+      <section className="mt-12">
+        <h2 className="text-3xl font-bold text-center text-green-800 mb-8">تصفح المنتجات</h2>
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <input
             type="text"
@@ -79,20 +98,21 @@ const HomePage: React.FC = () => {
           </select>
         </div>
         
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
-        { !loading && filteredProducts.length === 0 && (
-            <div className="text-center py-16 bg-white rounded-lg shadow-md">
-                <h3 className="text-2xl font-bold text-gray-700">لا توجد منتجات مطابقة</h3>
-                <p className="text-gray-500 mt-2">حاول تغيير كلمات البحث أو الفلاتر.</p>
-            </div>
+        {!loading && (
+          <>
+            {filteredProducts.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    {filteredProducts.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center py-16 bg-white rounded-lg shadow-md">
+                    <h3 className="text-2xl font-bold text-gray-700">لا توجد منتجات مطابقة</h3>
+                    <p className="text-gray-500 mt-2">حاول تغيير كلمات البحث أو الفلاتر.</p>
+                </div>
+            )}
+          </>
         )}
       </section>
     </div>
