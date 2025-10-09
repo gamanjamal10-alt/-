@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Product, Store } from '../../types';
@@ -43,7 +42,7 @@ const ProductDetailsPage: React.FC = () => {
         </div>
         <div>
           <h1 className="text-4xl font-extrabold text-gray-900">{product.name}</h1>
-          <p className="mt-4 text-4xl font-bold text-green-700">{product.price.toLocaleString()} دج</p>
+          <p className="mt-4 text-4xl font-bold text-gray-800">{product.price.toLocaleString()} دج</p>
           <p className="mt-6 text-gray-700 leading-relaxed">{product.description}</p>
           <div className="mt-8 p-4 bg-gray-50 rounded-md border">
             <h2 className="font-bold text-lg">معلومات البائع</h2>
@@ -51,9 +50,9 @@ const ProductDetailsPage: React.FC = () => {
                 <>
                     <p className="mt-2 text-gray-800">
                         <span className="font-semibold">المتجر:</span>{' '}
-                        <Link to={`/stores/${store.id}`} className="text-green-600 hover:underline">{store.name}</Link>
+                        <Link to={`/stores/${store.id}`} className="text-gray-700 hover:underline">{store.name}</Link>
                     </p>
-                    <a href={`tel:${store.phone}`} className="mt-4 inline-block w-full text-center bg-green-700 text-white font-bold py-3 px-6 rounded-md hover:bg-green-800 transition-colors">
+                    <a href={`tel:${store.phone}`} className="mt-4 inline-block w-full text-center bg-gray-800 text-white font-bold py-3 px-6 rounded-md hover:bg-gray-900 transition-colors">
                         اتصل بالبائع ({store.phone})
                     </a>
                 </>

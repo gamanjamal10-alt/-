@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/ui/Input';
@@ -31,7 +30,7 @@ const LoginPage: React.FC = () => {
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-green-800">
+                    <h1 className="text-3xl font-bold text-gray-800">
                         <Link to="/">سوق الفلاح</Link>
                     </h1>
                     <p className="text-gray-600 mt-2">تسجيل الدخول إلى لوحة التحكم</p>
@@ -60,7 +59,7 @@ const LoginPage: React.FC = () => {
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
                     ليس لديك حساب؟{' '}
-                    <Link to="/register" className="font-medium text-green-700 hover:text-green-600">
+                    <Link to="/register" className="font-medium text-gray-700 hover:text-gray-600">
                         أنشئ متجرك الآن
                     </Link>
                 </p>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Product, StoreType } from '../../types';
 import { getProducts } from '../../services/api';
@@ -42,8 +41,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <section className="text-center py-12 bg-green-50 rounded-lg">
-        <h1 className="text-4xl font-extrabold text-green-900">أهلاً بك في سوق الفلاح</h1>
+      <section className="text-center py-12 bg-gray-100 rounded-lg">
+        <h1 className="text-4xl font-extrabold text-gray-900">أهلاً بك في سوق الفلاح</h1>
         <p className="mt-4 text-lg text-gray-700">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
       </section>
 
@@ -52,12 +51,12 @@ const HomePage: React.FC = () => {
           <input
             type="text"
             placeholder="ابحث عن منتج..."
-            className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+            className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-gray-500"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select 
-            className="p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:ring-green-500 focus:border-green-500"
+            className="p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:ring-gray-500 focus:border-gray-500"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value as StoreType | 'all')}
             >

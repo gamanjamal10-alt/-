@@ -7,7 +7,7 @@ import Spinner from '../../components/ui/Spinner';
 // FIX: Replaced JSX.Element with React.ReactNode to fix "Cannot find namespace 'JSX'" error.
 const StatCard: React.FC<{ title: string; value: string | number; icon: React.ReactNode }> = ({ title, value, icon }) => (
     <div className="bg-white p-6 rounded-lg shadow-md flex items-center space-x-4 space-x-reverse">
-        <div className="bg-green-100 p-3 rounded-full">
+        <div className="bg-gray-100 p-3 rounded-full">
             {icon}
         </div>
         <div>
@@ -59,8 +59,8 @@ const DashboardOverviewPage: React.FC = () => {
         }
     };
     
-    const ProductIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>;
-    const SubscriptionIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
+    const ProductIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>;
+    const SubscriptionIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
 
     return (
         <div>
@@ -78,7 +78,7 @@ const DashboardOverviewPage: React.FC = () => {
                         {products.slice(0, 5).map(p => (
                             <li key={p.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-md">
                                 <span>{p.name}</span>
-                                <span className="font-bold text-green-700">{p.price} دج</span>
+                                <span className="font-bold text-gray-800">{p.price} دج</span>
                             </li>
                         ))}
                     </ul>

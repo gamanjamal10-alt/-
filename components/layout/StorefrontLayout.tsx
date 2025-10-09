@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -14,19 +13,19 @@ const StorefrontHeader: React.FC = () => {
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-3xl font-bold text-green-800">
+        <Link to="/" className="text-3xl font-bold text-gray-800">
           سوق الفلاح
         </Link>
         <div className="flex items-center space-x-4 space-x-reverse">
           {user ? (
             <>
-              <button onClick={handleDashboardClick} className="px-4 py-2 text-green-700 font-semibold rounded-md hover:bg-green-50">لوحة التحكم</button>
+              <button onClick={handleDashboardClick} className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-gray-100">لوحة التحكم</button>
               <button onClick={logout} className="px-4 py-2 text-gray-600 font-semibold rounded-md hover:bg-gray-100">تسجيل الخروج</button>
             </>
           ) : (
             <>
-              <Link to="/login" className="px-4 py-2 text-green-700 font-semibold rounded-md hover:bg-green-50">تسجيل الدخول</Link>
-              <Link to="/register" className="px-4 py-2 bg-green-700 text-white font-bold rounded-md hover:bg-green-800">
+              <Link to="/login" className="px-4 py-2 text-gray-700 font-semibold rounded-md hover:bg-gray-100">تسجيل الدخول</Link>
+              <Link to="/register" className="px-4 py-2 bg-gray-800 text-white font-bold rounded-md hover:bg-gray-900">
                 ابدأ متجرك
               </Link>
             </>

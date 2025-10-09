@@ -1,23 +1,30 @@
-
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger';
+  // FIX: Add size prop to support different button sizes and fix type error.
+  size?: 'sm' | 'md';
   isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', isLoading = false, className = '', ...props }) => {
-  const baseClasses = "px-6 py-2 rounded-md font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2";
+const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', size = 'md', isLoading = false, className = '', ...props }) => {
+  // FIX: Remove padding from base classes so it can be controlled by the new 'size' prop.
+  const baseClasses = "rounded-md font-bold text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2";
 
   const variantClasses = {
-    primary: 'bg-green-700 hover:bg-green-800 focus:ring-green-500',
+    primary: 'bg-gray-800 hover:bg-gray-900 focus:ring-gray-700',
     secondary: 'bg-gray-600 hover:bg-gray-700 focus:ring-gray-500',
     danger: 'bg-red-600 hover:bg-red-700 focus:ring-red-500',
   };
 
+  const sizeClasses = {
+    sm: 'px-3 py-1 text-sm',
+    md: 'px-6 py-2',
+  };
+
   return (
     <button
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
       disabled={isLoading || props.disabled}
       {...props}
     >

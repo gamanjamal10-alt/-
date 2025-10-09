@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { Subscription } from '../../types';
@@ -56,7 +55,7 @@ const SubscriptionPage: React.FC = () => {
             case 'active':
                 title = "اشتراكك نشط";
                 message = `شكراً لك! متجرك فعال وسيظل كذلك حتى تاريخ ${expires?.toLocaleDateString('ar-DZ')}.`;
-                bgColor = 'bg-green-100 border-green-500 text-green-800';
+                bgColor = 'bg-blue-100 border-blue-500 text-blue-800';
                 break;
             case 'trial':
                 title = "أنت في الفترة التجريبية";
@@ -92,7 +91,7 @@ const SubscriptionPage: React.FC = () => {
                         <p className="mt-2 text-gray-600">
                             احصل على وصول كامل لمنصة سوق الفلاح لمدة سنة كاملة.
                         </p>
-                        <p className="my-4 text-4xl font-extrabold text-green-700">
+                        <p className="my-4 text-4xl font-extrabold text-gray-800">
                             {ANNUAL_SUBSCRIPTION_FEE.toLocaleString()} دج / سنة
                         </p>
                         <p className="font-bold mb-4">اختر طريقة الدفع:</p>
