@@ -1,9 +1,14 @@
-
 export enum StoreType {
   FARMER = 'فلاح',
   WHOLESALER = 'تاجر جملة',
   RETAILER = 'تاجر تجزئة',
   TRANSPORT = 'نقل',
+}
+
+export enum ProductStatus {
+  IN_STOCK = 'متوفر',
+  LOW_STOCK = 'كمية قليلة',
+  OUT_OF_STOCK = 'نفذ المخزون',
 }
 
 export interface User {
@@ -33,6 +38,7 @@ export interface Product {
   images: string[];
   quantity: number;
   storeId: string;
+  status: ProductStatus;
 }
 
 export interface Subscription {

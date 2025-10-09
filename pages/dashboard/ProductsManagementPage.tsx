@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import { Product } from '../../types';
+import { Product, ProductStatus } from '../../types';
 import { getProductsForStore, addProduct, updateProduct, deleteProduct } from '../../services/api';
 import Spinner from '../../components/ui/Spinner';
 import Button from '../../components/ui/Button';
@@ -12,6 +12,7 @@ const ProductForm: React.FC<{ product?: Product | null; onSave: (product: Omit<P
     const [price, setPrice] = useState(product?.price || 0);
     const [quantity, setQuantity] = useState(product?.quantity || 0);
     const [description, setDescription] = useState(product?.description || '');
+    const [status, setStatus] = useState<ProductStatus>(product?.status || ProductStatus.IN_STOCK);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ const ProductForm: React.FC<{ product?: Product | null; onSave: (product: Omit<P
             price: Number(price),
             quantity: Number(quantity),
             description,
+            status,
             // Mock data, in real app handle image uploads
             images: product?.images || ['https://picsum.photos/seed/newproduct/400/300'],
             storeId: product?.storeId || '', // StoreId should be passed from parent
@@ -38,6 +40,12 @@ const ProductForm: React.FC<{ product?: Product | null; onSave: (product: Omit<P
             <div className="flex gap-4">
                 <Input id="price" label="السعر (دج)" type="number" value={price} onChange={e => setPrice(Number(e.target.value))} required />
                 <Input id="quantity" label="الكمية" type="number" value={quantity} onChange={e => setQuantity(Number(e.target.value))} required />
+            </div>
+            <div>
+              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">حالة المنتج</label>
+              <select id="status" value={status} onChange={e => setStatus(e.target.value as ProductStatus)} className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500">
+                {Object.values(ProductStatus).map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
             </div>
             <div>
               <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">الوصف</label>
@@ -122,6 +130,20 @@ const ProductsManagementPage: React.FC = () => {
         setIsFormVisible(false);
         setEditingProduct(null);
     };
+    
+    const getStatusBadge = (status: ProductStatus) => {
+        switch (status) {
+            case ProductStatus.IN_STOCK:
+                return <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">{status}</span>;
+            case ProductStatus.LOW_STOCK:
+                return <span className="px-3 py-1 text-sm font-semibold text-yellow-800 bg-yellow-100 rounded-full">{status}</span>;
+            case ProductStatus.OUT_OF_STOCK:
+                return <span className="px-3 py-1 text-sm font-semibold text-red-800 bg-red-100 rounded-full">{status}</span>;
+            default:
+                return <span className="px-3 py-1 text-sm font-semibold text-gray-800 bg-gray-100 rounded-full">{status}</span>;
+        }
+    };
+
 
     if (loading) return <Spinner />;
 
@@ -148,6 +170,7 @@ const ProductsManagementPage: React.FC = () => {
                             <th className="p-3">المنتج</th>
                             <th className="p-3">السعر</th>
                             <th className="p-3">الكمية</th>
+                            <th className="p-3">الحالة</th>
                             <th className="p-3">إجراءات</th>
                         </tr>
                     </thead>
@@ -157,6 +180,7 @@ const ProductsManagementPage: React.FC = () => {
                                 <td className="p-3 font-medium">{product.name}</td>
                                 <td className="p-3">{product.price.toLocaleString()} دج</td>
                                 <td className="p-3">{product.quantity}</td>
+                                <td className="p-3">{getStatusBadge(product.status)}</td>
                                 <td className="p-3 space-x-2 space-x-reverse">
                                     <Button variant="secondary" size="sm" onClick={() => handleEdit(product)}>تعديل</Button>
                                     <Button variant="danger" size="sm" onClick={() => handleDeleteProduct(product.id)}>حذف</Button>

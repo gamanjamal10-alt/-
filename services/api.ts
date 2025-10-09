@@ -1,5 +1,4 @@
-
-import { User, Store, Product, Subscription, Payment, StoreType } from '../types';
+import { User, Store, Product, Subscription, Payment, StoreType, ProductStatus } from '../types';
 import { ANNUAL_SUBSCRIPTION_FEE } from '../constants';
 
 // --- MOCK DATABASE ---
@@ -16,10 +15,10 @@ let stores: Store[] = [
 ];
 
 let products: Product[] = [
-  { id: 'prod-1', name: 'طماطم طازجة', price: 120, description: 'طماطم حمراء ناضجة، مثالية للسلطات والطبخ.', images: ['https://picsum.photos/seed/tomato1/400/300', 'https://picsum.photos/seed/tomato2/400/300'], quantity: 500, storeId: 'store-1' },
-  { id: 'prod-2', name: 'بطاطا', price: 80, description: 'بطاطا عالية الجودة من حقولنا.', images: ['https://picsum.photos/seed/potato1/400/300'], quantity: 1000, storeId: 'store-1' },
-  { id: 'prod-3', name: 'تمر دقلة نور', price: 800, description: 'تمر دقلة نور الفاخر من بسكرة.', images: ['https://picsum.photos/seed/dates1/400/300', 'https://picsum.photos/seed/dates2/400/300'], quantity: 200, storeId: 'store-2' },
-  { id: 'prod-4', name: 'زيت زيتون 5 لتر', price: 4500, description: 'عبوة 5 لتر من زيت الزيتون البكر الممتاز.', images: ['https://picsum.photos/seed/oliveoil1/400/300'], quantity: 150, storeId: 'store-3' },
+  { id: 'prod-1', name: 'طماطم طازجة', price: 120, description: 'طماطم حمراء ناضجة، مثالية للسلطات والطبخ.', images: ['https://picsum.photos/seed/tomato1/400/300', 'https://picsum.photos/seed/tomato2/400/300'], quantity: 500, storeId: 'store-1', status: ProductStatus.IN_STOCK },
+  { id: 'prod-2', name: 'بطاطا', price: 80, description: 'بطاطا عالية الجودة من حقولنا.', images: ['https://picsum.photos/seed/potato1/400/300'], quantity: 1000, storeId: 'store-1', status: ProductStatus.IN_STOCK },
+  { id: 'prod-3', name: 'تمر دقلة نور', price: 800, description: 'تمر دقلة نور الفاخر من بسكرة.', images: ['https://picsum.photos/seed/dates1/400/300', 'https://picsum.photos/seed/dates2/400/300'], quantity: 15, storeId: 'store-2', status: ProductStatus.LOW_STOCK },
+  { id: 'prod-4', name: 'زيت زيتون 5 لتر', price: 4500, description: 'عبوة 5 لتر من زيت الزيتون البكر الممتاز.', images: ['https://picsum.photos/seed/oliveoil1/400/300'], quantity: 0, storeId: 'store-3', status: ProductStatus.OUT_OF_STOCK },
 ];
 
 let subscriptions: Subscription[] = [
