@@ -2,40 +2,43 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
-import { StoreType } from '../../types';
+import { register } from '../../services/api';
 
 const RegisterPage: React.FC = () => {
-    const [step, setStep] = useState(1);
+    const [storeName, setStoreName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [storeType, setStoreType] = useState<StoreType>(StoreType.FARMER);
-    const [otp, setOtp] = useState('');
-    const [captcha, setCaptcha] = useState('');
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleFirstStep = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock OTP sending and move to next step
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            setStep(2);
-        }, 1000);
-    };
+        setError('');
 
-    const handleFinalSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Mock registration and redirect
+        if (password !== confirmPassword) {
+            setError('كلمتا المرور غير متطابقتين.');
+            return;
+        }
+
+        if (password.length < 6) {
+            setError('يجب أن تكون كلمة المرور 6 أحرف على الأقل.');
+            return;
+        }
+
         setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-            // In a real app, you would now log the user in
-            alert('تم التسجيل بنجاح! سيتم تحويلك لصفحة الدخول.');
+
+        try {
+            await register({ storeName, email, phone, password });
+            alert('تم إنشاء حسابك بنجاح! متجرك الآن قيد المراجعة. سيتم توجيهك لصفحة تسجيل الدخول.');
             navigate('/login');
-        }, 1500);
+        } catch (err: any) {
+            setError(err.message || 'فشل إنشاء الحساب. يرجى المحاولة مرة أخرى.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -47,44 +50,56 @@ const RegisterPage: React.FC = () => {
                     </h1>
                     <p className="text-gray-600 mt-2">إنشاء متجر جديد</p>
                 </div>
-
-                {step === 1 && (
-                    <form onSubmit={handleFirstStep} className="space-y-6">
-                        <Input id="email" label="البريد الإلكتروني" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <Input id="phone" label="رقم الهاتف" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-                        <Input id="password" label="كلمة المرور" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                        <Input id="confirmPassword" label="تأكيد كلمة المرور" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                        <div>
-                          <label htmlFor="storeType" className="block text-sm font-medium text-gray-700 mb-1">نوع المتجر</label>
-                          <select id="storeType" value={storeType} onChange={(e) => setStoreType(e.target.value as StoreType)} className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500">
-                            {Object.values(StoreType).map(type => <option key={type} value={type}>{type}</option>)}
-                          </select>
-                        </div>
-                        <Button type="submit" className="w-full" isLoading={isLoading}>
-                            التالي
-                        </Button>
-                    </form>
-                )}
-
-                {step === 2 && (
-                    <form onSubmit={handleFinalSubmit} className="space-y-6">
-                        <p className="text-center">تم إرسال رمز التحقق إلى {phone}.</p>
-                        <Input id="otp" label="رمز التحقق (OTP)" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} required />
-                        <div className="text-center p-4 bg-gray-200 rounded-md">
-                            <p className="font-mono tracking-widest text-xl select-none">aB5x8P</p>
-                            <label htmlFor="captcha" className="sr-only">Captcha</label>
-                        </div>
-                        <Input id="captcha" label="أدخل الرمز أعلاه (Captcha)" type="text" value={captcha} onChange={(e) => setCaptcha(e.target.value)} required />
-                        <Button type="submit" className="w-full" isLoading={isLoading}>
-                            إنشاء الحساب
-                        </Button>
-                    </form>
-                )}
-                
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                        id="storeName"
+                        label="اسم المتجر"
+                        type="text"
+                        value={storeName}
+                        onChange={(e) => setStoreName(e.target.value)}
+                        required
+                    />
+                    <Input
+                        id="email"
+                        label="البريد الإلكتروني"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                     <Input
+                        id="phone"
+                        label="رقم الهاتف"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                    />
+                    <Input
+                        id="password"
+                        label="كلمة المرور"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <Input
+                        id="confirmPassword"
+                        label="تأكيد كلمة المرور"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                    {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                    <Button type="submit" className="w-full" isLoading={isLoading}>
+                        إنشاء حساب
+                    </Button>
+                </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
                     لديك حساب بالفعل؟{' '}
                     <Link to="/login" className="font-medium text-gray-700 hover:text-gray-600">
-                        سجل الدخول
+                        تسجيل الدخول
                     </Link>
                 </p>
             </div>

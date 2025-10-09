@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Product, StoreType } from '../../types';
-import { getProducts } from '../../services/api';
+import { Product, Store, StoreType } from '../../types';
+import { getProducts, getStores } from '../../services/api';
 import ProductCard from '../../components/ProductCard';
 import Spinner from '../../components/ui/Spinner';
 
 const HomePage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState<StoreType | 'all'>('all');
@@ -13,30 +14,41 @@ const HomePage: React.FC = () => {
   const storeTypes = useMemo(() => ['all', ...Object.values(StoreType)], []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const fetchedProducts = await getProducts();
+        const [fetchedProducts, fetchedStores] = await Promise.all([
+          getProducts(),
+          getStores(),
+        ]);
         setProducts(fetchedProducts);
+        setStores(fetchedStores);
       } catch (error) {
-        console.error("Failed to fetch products:", error);
+        console.error("Failed to fetch data:", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchProducts();
+    fetchData();
   }, []);
+
+  const storeTypeMap = useMemo(() => {
+    return stores.reduce((map, store) => {
+      map.set(store.id, store.type);
+      return map;
+    }, new Map<string, StoreType>());
+  }, [stores]);
   
   const filteredProducts = useMemo(() => {
     return products
         .filter(product => {
-            const store = { type: StoreType.FARMER }; // This is a placeholder, a real app would fetch store info
-            if (selectedType !== 'all' && store.type !== selectedType) {
+            const storeType = storeTypeMap.get(product.storeId);
+            if (selectedType !== 'all' && storeType !== selectedType) {
                 return false;
             }
             return product.name.toLowerCase().includes(searchTerm.toLowerCase());
         });
-  }, [products, searchTerm, selectedType]);
+  }, [products, searchTerm, selectedType, storeTypeMap]);
 
 
   return (

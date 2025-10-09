@@ -1,8 +1,31 @@
+export interface User {
+  id: string;
+  email: string;
+  storeId: string;
+}
+
 export enum StoreType {
   FARMER = 'فلاح',
   WHOLESALER = 'تاجر جملة',
   RETAILER = 'تاجر تجزئة',
-  TRANSPORT = 'نقل',
+}
+
+export enum StoreStatus {
+  PENDING_VERIFICATION = 'قيد التحقق',
+  TRIAL = 'فترة تجريبية',
+  ACTIVE = 'نشط',
+  SUSPENDED = 'موقوف',
+}
+
+export interface Store {
+  id: string;
+  name: string;
+  description: string;
+  phone: string;
+  logo: string;
+  type: StoreType;
+  ownerId: string;
+  status: StoreStatus;
 }
 
 export enum ProductStatus {
@@ -11,48 +34,30 @@ export enum ProductStatus {
   OUT_OF_STOCK = 'نفذ المخزون',
 }
 
-export interface User {
-  id: string;
-  email: string;
-  phone: string;
-  role: 'seller' | 'admin';
-  storeId: string;
-}
-
-export interface Store {
-  id: string;
-  name: string;
-  logo: string;
-  type: StoreType;
-  description: string;
-  phone: string;
-  ownerId: string;
-  isActive: boolean; // Based on subscription
-}
-
 export interface Product {
   id: string;
   name: string;
   price: number;
-  description: string;
-  images: string[];
   quantity: number;
-  storeId: string;
+  description: string;
   status: ProductStatus;
+  images: string[];
+  storeId: string;
 }
 
 export interface Subscription {
+  id: string;
   storeId: string;
   status: 'active' | 'trial' | 'expired';
-  trialEnds: Date | null;
-  expires: Date | null;
+  expires?: Date;
+  trialEnds?: Date;
 }
 
 export interface Payment {
   id: string;
   storeId: string;
-  amount: number;
   date: Date;
+  amount: number;
   method: 'BaridiMob' | 'CCP';
   status: 'completed';
 }
