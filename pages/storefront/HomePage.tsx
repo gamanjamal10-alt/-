@@ -1,122 +1,70 @@
-// Fix: Corrected the React import statement which had a syntax error.
-import React, { useState, useEffect, useMemo } from 'react';
-import { Product, Store, StoreType } from '../../types';
+import React, { useState, useEffect } from 'react';
 import { getProducts, getStores } from '../../services/api';
+import { Product, Store } from '../../types';
 import ProductCard from '../../components/ProductCard';
 import Spinner from '../../components/ui/Spinner';
 import StoreCard from '../../components/StoreCard';
 
 const HomePage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [stores, setStores] = useState<Store[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<StoreType | 'all'>('all');
-  
-  const storeTypes = useMemo(() => ['all', ...Object.values(StoreType)], []);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [stores, setStores] = useState<Store[]>([]);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [fetchedProducts, fetchedStores] = await Promise.all([
-          getProducts(),
-          getStores(),
-        ]);
-        setProducts(fetchedProducts);
-        setStores(fetchedStores);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const storeTypeMap = useMemo(() => {
-    return stores.reduce((map, store) => {
-      map.set(store.id, store.type);
-      return map;
-    }, new Map<string, StoreType>());
-  }, [stores]);
-  
-  const filteredProducts = useMemo(() => {
-    return products
-        .filter(product => {
-            const storeType = storeTypeMap.get(product.storeId);
-            if (selectedType !== 'all' && storeType !== selectedType) {
-                return false;
+    useEffect(() => {
+        const fetchHomePageData = async () => {
+            setLoading(true);
+            try {
+                const [fetchedProducts, fetchedStores] = await Promise.all([
+                    getProducts(),
+                    getStores()
+                ]);
+                setProducts(fetchedProducts);
+                setStores(fetchedStores);
+            } catch (error) {
+                console.error("Failed to fetch home page data:", error);
+            } finally {
+                setLoading(false);
             }
-            return product.name.toLowerCase().includes(searchTerm.toLowerCase());
-        });
-  }, [products, searchTerm, selectedType, storeTypeMap]);
+        };
+        fetchHomePageData();
+    }, []);
 
+    if (loading) return <Spinner />;
 
-  return (
-    <div>
-      <section className="text-center py-12 bg-white rounded-lg shadow-md">
-        <h1 className="text-4xl font-extrabold text-green-800">أهلاً بك في سوق الفلاح</h1>
-        <p className="mt-4 text-lg text-gray-600">منصة لبيع وشراء المنتجات الفلاحية مباشرة من المصدر.</p>
-      </section>
-
-      {/* Stores Section */}
-      <section className="mt-12">
-        <h2 className="text-3xl font-bold mb-8 text-green-800 text-center">اكتشف المتاجر</h2>
-        {loading ? (
-            <Spinner />
-        ) : stores.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {stores.map(store => (
-                    <StoreCard key={store.id} store={store} />
-                ))}
+    return (
+        <div>
+            <div className="text-center mb-12">
+                <h1 className="text-4xl font-extrabold text-gray-900">أهلاً بك في سوق الفلاح</h1>
+                <p className="mt-4 text-lg text-gray-600">منصة المزارعين وتجار الجملة في الجزائر. اكتشف أجود المنتجات الطازجة مباشرة من مصدرها.</p>
             </div>
-        ) : (
-            <p className="text-center py-8 text-gray-500 bg-white rounded-lg shadow-md">لا توجد متاجر متاحة حالياً.</p>
-        )}
-      </section>
+            
+            <section>
+                <h2 className="text-3xl font-bold mb-6 text-green-800">أحدث المنتجات</h2>
+                {products.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {products.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-center text-gray-500 py-8">لا توجد منتجات لعرضها حالياً.</p>
+                )}
+            </section>
 
-      {/* Products Section */}
-      <section className="mt-12">
-        <h2 className="text-3xl font-bold text-center text-green-800 mb-8">تصفح المنتجات</h2>
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <input
-            type="text"
-            placeholder="ابحث عن منتج..."
-            className="flex-grow p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-800 focus:border-green-800"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select 
-            className="p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:ring-green-800 focus:border-green-800"
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value as StoreType | 'all')}
-            >
-            {storeTypes.map(type => (
-                <option key={type} value={type}>{type === 'all' ? 'كل الأنواع' : type}</option>
-            ))}
-          </select>
+            <section className="mt-16">
+                <h2 className="text-3xl font-bold mb-6 text-green-800">المتاجر المميزة</h2>
+                {stores.length > 0 ? (
+                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {stores.map(store => (
+                            <StoreCard key={store.id} store={store} />
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-center text-gray-500 py-8">لا توجد متاجر لعرضها حالياً.</p>
+                )}
+            </section>
         </div>
-        
-        {!loading && (
-          <>
-            {filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {filteredProducts.map(product => (
-                    <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
-            ) : (
-                <div className="text-center py-16 bg-white rounded-lg shadow-md">
-                    <h3 className="text-2xl font-bold text-gray-700">لا توجد منتجات مطابقة</h3>
-                    <p className="text-gray-500 mt-2">حاول تغيير كلمات البحث أو الفلاتر.</p>
-                </div>
-            )}
-          </>
-        )}
-      </section>
-    </div>
-  );
+    );
 };
 
 export default HomePage;

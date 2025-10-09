@@ -1,47 +1,68 @@
 import React from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const DashboardSidebar: React.FC = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+    
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+    const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+        `flex items-center p-3 my-1 rounded-md transition-colors ${
+            isActive
+                ? 'bg-green-800 text-white'
+                : 'text-gray-700 hover:bg-green-100 hover:text-green-900'
+        }`;
 
-  const linkClasses = "flex items-center px-4 py-3 text-green-100 hover:bg-green-700 rounded-md transition-colors";
-  const activeLinkClasses = "bg-green-700 font-bold";
-
-  return (
-    <div className="h-screen w-64 bg-green-800 text-white flex flex-col fixed top-0 right-0 shadow-lg">
-      <div className="px-6 py-4 border-b border-green-700">
-        <h1 className="text-2xl font-bold">لوحة التحكم</h1>
-        <p className="text-sm text-green-200 truncate">{user?.email}</p>
-      </div>
-      <nav className="flex-grow p-4 space-y-2">
-        <NavLink to="/dashboard/overview" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>نظرة عامة</NavLink>
-        <NavLink to="/dashboard/products" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>إدارة المنتجات</NavLink>
-        <NavLink to="/dashboard/settings" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>إعدادات المتجر</NavLink>
-        <NavLink to="/dashboard/subscription" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>الاشتراك</NavLink>
-        <NavLink to="/dashboard/invoices" className={({isActive}) => `${linkClasses} ${isActive ? activeLinkClasses : ''}`}>الفواتير</NavLink>
-      </nav>
-      <div className="p-4 border-t border-green-700">
-        <NavLink to="/" className={linkClasses}>العودة للموقع</NavLink>
-        <button onClick={handleLogout} className={`${linkClasses} w-full text-right`}>تسجيل الخروج</button>
-      </div>
-    </div>
-  );
+    return (
+        <aside className="w-64 bg-white p-4 shadow-lg flex flex-col">
+            <div className="mb-8 text-center">
+                <Link to="/" className="text-2xl font-bold text-green-800">
+                    سوق الفلاح
+                </Link>
+            </div>
+            <nav className="flex-grow">
+                <NavLink to="/dashboard/overview" className={navLinkClasses}>
+                    نظرة عامة
+                </NavLink>
+                <NavLink to="/dashboard/products" className={navLinkClasses}>
+                    المنتجات
+                </NavLink>
+                <NavLink to="/dashboard/settings" className={navLinkClasses}>
+                    إعدادات المتجر
+                </NavLink>
+                <NavLink to="/dashboard/subscription" className={navLinkClasses}>
+                    الاشتراك
+                </NavLink>
+                <NavLink to="/dashboard/invoices" className={navLinkClasses}>
+                    الفواتير
+                </NavLink>
+            </nav>
+            <div className="mt-auto">
+                 <button onClick={handleLogout} className="w-full text-right p-3 rounded-md text-gray-700 hover:bg-red-100 hover:text-red-700 transition-colors">
+                    تسجيل الخروج
+                </button>
+            </div>
+        </aside>
+    );
 };
+
 
 const DashboardLayout: React.FC = () => {
   return (
-    <div className="flex bg-amber-50 min-h-screen">
+    <div className="flex h-screen bg-gray-100" dir="rtl">
       <DashboardSidebar />
-      <main className="flex-1 p-8 mr-64">
-        <Outlet />
-      </main>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+          <div className="container mx-auto px-6 py-8">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
