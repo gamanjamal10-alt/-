@@ -55,12 +55,19 @@ const SubscriptionPage: React.FC = () => {
             case 'active':
                 title = "اشتراكك نشط";
                 message = `شكراً لك! متجرك فعال وسيظل كذلك حتى تاريخ ${expires?.toLocaleDateString('ar-DZ')}.`;
-                bgColor = 'bg-blue-100 border-blue-500 text-blue-800';
+                bgColor = 'bg-green-100 border-green-500 text-green-800';
                 break;
             case 'trial':
                 title = "أنت في الفترة التجريبية";
-                message = `استمتع بكافة الميزات مجاناً. تنتهي الفترة التجريبية في ${trialEnds?.toLocaleDateString('ar-DZ')}.`;
-                bgColor = 'bg-blue-100 border-blue-500 text-blue-800';
+                const daysLeft = trialEnds ? Math.round((trialEnds.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : 0;
+                message = `استمتع بكافة الميزات مجاناً. تنتهي الفترة التجريبية في ${trialEnds?.toLocaleDateString('ar-DZ')}. (${daysLeft > 0 ? `${daysLeft} يوم متبقي` : 'اليوم الأخير'}).`;
+                
+                if (daysLeft <= 5) {
+                    message += " سارع بتجديد اشتراكك لتجنب إيقاف المتجر.";
+                    bgColor = 'bg-yellow-100 border-yellow-500 text-yellow-800';
+                } else {
+                    bgColor = 'bg-green-100 border-green-500 text-green-800';
+                }
                 break;
             case 'expired':
                 title = "انتهت صلاحية اشتراكك";
@@ -91,7 +98,7 @@ const SubscriptionPage: React.FC = () => {
                         <p className="mt-2 text-gray-600">
                             احصل على وصول كامل لمنصة سوق الفلاح لمدة سنة كاملة.
                         </p>
-                        <p className="my-4 text-4xl font-extrabold text-gray-800">
+                        <p className="my-4 text-4xl font-extrabold text-green-900">
                             {ANNUAL_SUBSCRIPTION_FEE.toLocaleString()} دج / سنة
                         </p>
                         <p className="font-bold mb-4">اختر طريقة الدفع:</p>

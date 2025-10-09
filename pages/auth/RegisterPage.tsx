@@ -32,7 +32,7 @@ const RegisterPage: React.FC = () => {
 
         try {
             await register({ storeName, email, phone, password });
-            alert('تم إنشاء حسابك بنجاح! متجرك الآن قيد المراجعة. سيتم توجيهك لصفحة تسجيل الدخول.');
+            alert('تم إنشاء متجرك بنجاح! وهو الآن ظاهر للعامة لفترة تجريبية مدتها 30 يومًا. سيتم توجيهك لصفحة تسجيل الدخول.');
             navigate('/login');
         } catch (err: any) {
             setError(err.message || 'فشل إنشاء الحساب. يرجى المحاولة مرة أخرى.');
@@ -42,10 +42,10 @@ const RegisterPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
+        <div className="min-h-screen bg-stone-100 flex items-center justify-center py-12">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">
+                    <h1 className="text-3xl font-bold text-green-800">
                         <Link to="/">سوق الفلاح</Link>
                     </h1>
                     <p className="text-gray-600 mt-2">إنشاء متجر جديد</p>
@@ -98,7 +98,7 @@ const RegisterPage: React.FC = () => {
                 </form>
                 <p className="mt-6 text-center text-sm text-gray-600">
                     لديك حساب بالفعل؟{' '}
-                    <Link to="/login" className="font-medium text-gray-700 hover:text-gray-600">
+                    <Link to="/login" className="font-medium text-green-700 hover:text-green-600">
                         تسجيل الدخول
                     </Link>
                 </p>

@@ -13,7 +13,7 @@ let mockStores: Store[] = [
     name: 'مزرعة الخيرات', 
     description: 'نوفر لكم أجود أنواع الخضروات والفواكه الطازجة مباشرة من الحقل.',
     phone: '0555123456',
-    logo: 'https://picsum.photos/seed/store1/200',
+    logo: 'https://picsum.photos/seed/farm1/200',
     type: StoreType.FARMER,
     ownerId: 'user-1',
     status: StoreStatus.ACTIVE
@@ -23,7 +23,7 @@ let mockStores: Store[] = [
     name: 'بستاني للفواكه', 
     description: 'متخصصون في بيع الفواكه الموسمية بالجملة.',
     phone: '0666789012',
-    logo: 'https://picsum.photos/seed/store2/200',
+    logo: 'https://picsum.photos/seed/orchard/200',
     type: StoreType.WHOLESALER,
     ownerId: 'user-2',
     status: StoreStatus.TRIAL,
@@ -33,7 +33,7 @@ let mockStores: Store[] = [
     name: 'متجر تحت المراجعة', 
     description: 'هذا المتجر قيد المراجعة ولن يظهر للعامة.',
     phone: '0777000000',
-    logo: 'https://picsum.photos/seed/store3/200',
+    logo: 'https://picsum.photos/seed/review/200',
     type: StoreType.RETAILER,
     ownerId: 'user-3',
     status: StoreStatus.PENDING_VERIFICATION,
@@ -64,7 +64,22 @@ let mockPayments: Payment[] = [];
 
 // --- MOCK API FUNCTIONS ---
 
+// Helper function to simulate checking for expired trials and suspending stores
+const _checkAndUpdateAllStoreStatuses = () => {
+    const now = new Date();
+    mockStores.forEach(store => {
+        const sub = mockSubscriptions.find(s => s.storeId === store.id);
+        if (sub && sub.status === 'trial' && sub.trialEnds && sub.trialEnds < now) {
+            console.log(`Trial for store ${store.name} has expired. Suspending store.`);
+            store.status = StoreStatus.SUSPENDED;
+            sub.status = 'expired';
+        }
+    });
+};
+
 const mockApiCall = <T>(data: T, delay = 500): Promise<T> => {
+    // Run status check before resolving any data to simulate real-time changes
+    _checkAndUpdateAllStoreStatuses();
     return new Promise(resolve => setTimeout(() => resolve(data), delay));
 };
 
@@ -98,10 +113,11 @@ export const register = (data: { storeName: string; email: string; phone: string
         name: data.storeName,
         description: 'متجر جديد في سوق الفلاح.',
         phone: data.phone,
-        logo: 'https://picsum.photos/seed/newstore/200',
+        logo: 'https://picsum.photos/seed/newfarm/200',
         type: StoreType.FARMER, 
         ownerId: newUserId,
-        status: StoreStatus.PENDING_VERIFICATION,
+        // NEW LOGIC: Store is immediately in trial and public
+        status: StoreStatus.TRIAL,
     };
     mockStores.push(newStore);
     
@@ -109,7 +125,7 @@ export const register = (data: { storeName: string; email: string; phone: string
         id: `sub-${newStoreId}`,
         storeId: newStoreId,
         status: 'trial',
-        trialEnds: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        trialEnds: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30-day free trial
     };
     mockSubscriptions.push(newSubscription);
 
@@ -158,6 +174,7 @@ export const getProductsForStore = (storeId: string): Promise<Product[]> => getP
 export const addProduct = (productData: Omit<Product, 'id'>): Promise<Product> => {
     const newProduct: Product = {
         id: `prod-${Date.now()}`,
+        images: ['https://picsum.photos/seed/freshproduce/400/300'],
         ...productData
     };
     mockProducts.push(newProduct);

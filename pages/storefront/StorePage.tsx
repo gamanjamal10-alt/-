@@ -37,12 +37,12 @@ const StorePage: React.FC = () => {
   return (
     <div>
       <header className="bg-white p-8 rounded-lg shadow-lg mb-12 flex flex-col md:flex-row items-center gap-8">
-        <img src={store.logo} alt={`${store.name} logo`} className="w-32 h-32 rounded-full object-cover border-4 border-gray-200" />
+        <img src={store.logo} alt={`${store.name} logo`} className="w-32 h-32 rounded-full object-cover border-4 border-stone-200" />
         <div>
           <h1 className="text-4xl font-extrabold text-gray-900">{store.name}</h1>
-          <p className="mt-2 text-lg text-gray-600">{store.type}</p>
+          <p className="mt-2 text-lg text-green-600 font-bold">{store.type}</p>
           <p className="mt-4 text-gray-700">{store.description}</p>
-          <a href={`tel:${store.phone}`} className="mt-6 inline-block bg-gray-800 text-white font-bold py-3 px-8 rounded-md hover:bg-gray-900 transition-colors">
+          <a href={`tel:${store.phone}`} className="mt-6 inline-block bg-green-800 text-white font-bold py-3 px-8 rounded-md hover:bg-green-900 transition-colors">
             اتصل بالبائع
           </a>
         </div>
@@ -56,7 +56,7 @@ const StorePage: React.FC = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-gray-100 rounded-lg">
+        <div className="text-center py-16 bg-stone-100 rounded-lg">
           <p className="text-xl text-gray-600">هذا المتجر لم يضف أي منتجات بعد.</p>
         </div>
       )}

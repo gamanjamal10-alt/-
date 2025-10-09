@@ -13,7 +13,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <img className="h-56 w-full object-cover" src={product.images[0]} alt={product.name} />
         <div className="p-4">
           <h3 className="text-xl font-bold text-gray-800">{product.name}</h3>
-          <p className="mt-2 text-2xl font-extrabold text-gray-800">{product.price.toLocaleString()} دج</p>
+          <p className="mt-2 text-2xl font-extrabold text-green-700">{product.price.toLocaleString()} دج</p>
           <p className="mt-2 text-gray-600 truncate">{product.description}</p>
         </div>
       </Link>

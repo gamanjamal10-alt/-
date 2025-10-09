@@ -51,7 +51,7 @@ const InvoicesPage: React.FC = () => {
                                     <td className="p-3 font-bold">{payment.amount.toLocaleString()} دج</td>
                                     <td className="p-3">{payment.method}</td>
                                     <td className="p-3">
-                                        <span className="px-3 py-1 text-sm font-semibold text-blue-800 bg-blue-100 rounded-full">
+                                        <span className="px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
                                             {payment.status === 'completed' ? 'مكتملة' : payment.status}
                                         </span>
                                     </td>
